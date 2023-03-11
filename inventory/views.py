@@ -1,7 +1,8 @@
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, ListView
 
 from inventory.forms import GameForm
+from inventory.models import Game
 
 
 class HomeView(TemplateView):
@@ -17,3 +18,8 @@ class GameFormView(FormView):
     def form_valid(self, form):
         form.save()
         return super(GameFormView, self).form_valid(form)
+
+
+class GameListView(ListView):
+    model = Game
+    template_name = "game_list.html"
