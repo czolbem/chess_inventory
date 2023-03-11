@@ -11,3 +11,9 @@ class ViewTests(TestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
+
+    def test_get_add_game_returns_200(self):
+        url = reverse('add_game')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
