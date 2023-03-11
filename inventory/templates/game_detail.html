@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container-fluid">
+        <h1 class="mt-4">Game from DATE</h1>
+        <p>{{ game.description }}</p>
+
+        <h2>PGN</h2>
+        <div class="bg-light">
+            <pre>{{ game.pgn }}</pre>
+        </div>
+
+    </div>
+{% endblock %}
