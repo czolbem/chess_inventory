@@ -13,3 +13,7 @@ class GameFormView(FormView):
     form_class = GameForm
     # TODO change this to something better
     success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        form.save()
+        return super(GameFormView, self).form_valid(form)
