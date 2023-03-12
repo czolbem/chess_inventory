@@ -7,9 +7,10 @@ from custom_exceptions.exceptions import InvalidPgnException
 
 
 class PgnParser:
-    def parse(self, pgn: str) -> chess.pgn.Game:
+    @staticmethod
+    def parse(pgn: str) -> chess.pgn.Game:
         game = chess.pgn.read_game(io.StringIO(pgn))
-        if not self.is_valid(game):
+        if not PgnParser.is_valid(game):
             raise InvalidPgnException()
         return game
 
