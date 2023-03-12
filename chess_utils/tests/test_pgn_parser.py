@@ -94,9 +94,24 @@ class PgnParserTests(TestCase):
         with self.assertRaises(InvalidPgnException):
             PgnParser.parse(invalid_pgn_string)
 
+    def test_pgn_parser_rejects_invalid_pgn_bad_brackets(self):
+        with open('resources/invalid_pgn_bad_brackets.pgn') as invalid_pgn:
+            invalid_pgn_string = invalid_pgn.read()
+
+        with self.assertRaises(InvalidPgnException):
+            PgnParser.parse(invalid_pgn_string)
+
     def test_pgn_parser_parses_pgn_date_string_correctly(self):
         pgn_date_string = '2023.03.12'
         expected_date = datetime.date(2023, 3, 12)
+
+        parsed_date = PgnParser.pgn_date_string_to_date(pgn_date_string)
+
+        self.assertEqual(parsed_date, expected_date)
+
+    def test_pgn_parser_parses_pgn_date_string_with_unknown_year_to_none(self):
+        pgn_date_string = '????.03.12'
+        expected_date = None
 
         parsed_date = PgnParser.pgn_date_string_to_date(pgn_date_string)
 
