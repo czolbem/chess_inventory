@@ -15,6 +15,7 @@ class GameFormView(FormView):
     form_class = GameForm
 
     def form_valid(self, form) -> HttpResponseRedirect:
+        # todo validation and enrichment of model here
         game = form.save()
         return HttpResponseRedirect(reverse('game', kwargs={'pk': game.pk}))
 
