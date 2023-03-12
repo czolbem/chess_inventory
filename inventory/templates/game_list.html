@@ -15,7 +15,7 @@
             </thead>
             <tbody>
             {% for game in game_list %}
-                <tr class="clickable" onclick="window.location='{% url 'game' game.pk %}';">
+                <tr class="clickable" role="button" onclick="window.location='{% url 'game' game.pk %}';">
                     <th scope="row">{{ game.id }}</th>
                     <td>{{ game.date|date:"d.m.Y" }}</td>
                     <td>{{ game.description }}</td>

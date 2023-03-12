@@ -9,3 +9,12 @@ class RequiredPgnHeaders(Enum):
     WHITE = 'White'
     BLACK = 'Black'
     RESULT = 'Result'
+
+
+class OpeningPgnHeaders(Enum):
+    ECO = 'ECO'
+    OPENING = 'Opening'
+    VARIATION = 'Variation'
+    ECOT = 'ECOT'
+    OPENINGT = 'OpeningT'
+    VARIATIONT = 'VariationT'

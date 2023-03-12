@@ -54,6 +54,12 @@ class ViewTests(TestCase):
         self.assertEqual(game.white, 'Nepomniachtchi,I')
         self.assertEqual(game.black, 'Abdusattorov,Nodirbek')
         self.assertEqual(game.result, '1/2-1/2')
+        self.assertEqual(game.eco, 'A56')
+        self.assertEqual(game.opening, 'Benoni')
+        self.assertEqual(game.variation, None)
+        self.assertEqual(game.ecot, 'A57')
+        self.assertEqual(game.openingt, 'Benko gambit')
+        self.assertEqual(game.variationt, 'Gambit half accepted')
 
     def test_get_games_returns_httpstatus_ok(self):
         url = reverse('games')
