@@ -49,7 +49,8 @@ class PgnParser:
             return False
 
         for header in RequiredPgnHeaders:
-            if header.value not in tag_names:
+            # Explicitly allow round because Lichess omits it for some reason
+            if header is not RequiredPgnHeaders.ROUND and header.value not in tag_names:
                 return False
 
         return True
@@ -89,3 +90,21 @@ class PgnParser:
             return False
 
         return True
+
+    @staticmethod
+    def pgn_date_string_to_date(date_string: str) -> datetime.date:
+        date_split = date_string.split('.')
+        year = None
+        month = 1
+        day = 1
+        if '?' not in date_split[0]:
+            year = int(date_split[0])
+        if '?' not in date_split[1]:
+            month = int(date_split[1])
+        if '?' not in date_split[2]:
+            day = int(date_split[2])
+        if year is None:
+            date = None
+        else:
+            date = datetime.date(year, month, day)
+        return date

@@ -7,8 +7,11 @@ from django.urls import reverse
 
 from inventory.models import Game
 
+VALID_PGN_FILE = 'resources/valid_pgn.pgn'
+
 
 class ViewTests(TestCase):
+
     def test_get_home_returns_httpstatus_ok(self):
         url = reverse('home')
 
@@ -25,7 +28,7 @@ class ViewTests(TestCase):
 
     def test_add_game_redirects_to_detail_view_of_added_game(self):
         url = reverse('add_game')
-        with open('resources/valid_pgn.pgn') as pgn:
+        with open(VALID_PGN_FILE) as pgn:
             pgn_string = pgn.read()
 
         response = self.client.post(url, {'description': "Test Form", 'pgn': pgn_string})
@@ -34,7 +37,7 @@ class ViewTests(TestCase):
 
     def test_add_game_enriches_and_saves_game_model(self):
         url = reverse('add_game')
-        with open('resources/valid_pgn.pgn') as pgn:
+        with open(VALID_PGN_FILE) as pgn:
             pgn_string = pgn.read()
         description = "Test Form"
 
@@ -60,7 +63,9 @@ class ViewTests(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_get_game_returns_httpstatus_ok(self):
-        game = Game(description="Test Game", pgn="Test PGN")
+        with open(VALID_PGN_FILE) as pgn:
+            pgn_string = pgn.read()
+        game = Game(description="Test Game", pgn=pgn_string)
         game.save()
         url = reverse('game', kwargs={'pk': game.pk})
 

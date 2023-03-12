@@ -73,9 +73,31 @@
             </div>
         </div>
         <h2 class="mt-2">PGN</h2>
-        <div class="bg-light">
-            <pre>{{ game.pgn }}</pre>
+        <div class="container-fluid">
+            <div class="card">
+                <p class="card-header">
+                    <a data-bs-toggle="collapse" href="#collapse-pgn" aria-expanded="true"
+                       aria-controls="collapse-pgn" id="heading-pgn" class="d-block">
+                        Show
+                    </a>
+                </p>
+                <div id="collapse-pgn" class="collapse" aria-labelledby="heading-pgn">
+                    <div class="card-body">
+                        <pre id="pgn_string">{{ game.pgn }}</pre>
+                    </div>
+                </div>
+            </div>
         </div>
-
+        <h2 class="mt-2">Final Position ({{ turn_color }} to move)</h2>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    {{ chess_board_svg|safe }}
+                </div>
+            </div>
+        </div>
     </div>
+
+
+
 {% endblock %}

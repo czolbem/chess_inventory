@@ -1,10 +1,11 @@
-from unittest import TestCase
+import datetime
+from django.test import TestCase
 
 from chess_utils.pgn_parser import PgnParser
 from custom_exceptions.exceptions import InvalidPgnException
 
 
-class MyTestCase(TestCase):
+class PgnParserTests(TestCase):
 
     def test_pgn_parser_can_parse_valid_pgn(self):
         with open('resources/valid_pgn.pgn') as valid_pgn:
@@ -42,12 +43,14 @@ class MyTestCase(TestCase):
         with self.assertRaises(InvalidPgnException):
             PgnParser.parse(invalid_pgn_string)
 
-    def test_pgn_parser_rejects_invalid_pgn_missing_round(self):
+    def test_pgn_parser_accepts_invalid_pgn_missing_round(self):
+        # Explicitly allow invalid missing round because Lichess omits that header for some reason
         with open('resources/invalid_pgn_missing_round.pgn') as invalid_pgn:
             invalid_pgn_string = invalid_pgn.read()
 
-        with self.assertRaises(InvalidPgnException):
-            PgnParser.parse(invalid_pgn_string)
+        game = PgnParser.parse(invalid_pgn_string)
+
+        self.assertIsNotNone(game)
 
     def test_pgn_parser_rejects_invalid_pgn_missing_white(self):
         with open('resources/invalid_pgn_missing_white.pgn') as invalid_pgn:
@@ -90,3 +93,11 @@ class MyTestCase(TestCase):
 
         with self.assertRaises(InvalidPgnException):
             PgnParser.parse(invalid_pgn_string)
+
+    def test_pgn_parser_parses_pgn_date_string_correctly(self):
+        pgn_date_string = '2023.03.12'
+        expected_date = datetime.date(2023, 3, 12)
+
+        parsed_date = PgnParser.pgn_date_string_to_date(pgn_date_string)
+
+        self.assertEqual(parsed_date, expected_date)

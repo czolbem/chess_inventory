@@ -1,9 +1,9 @@
-import datetime
-
+from chess import COLOR_NAMES
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import TemplateView, FormView, ListView, DetailView
 
+from chess_utils.chess_game import ChessGame
 from chess_utils.enums import RequiredPgnHeaders
 from chess_utils.pgn_parser import PgnParser
 from inventory.forms import GameForm
@@ -23,7 +23,7 @@ class GameFormView(FormView):
         game = PgnParser.parse(game_model.pgn)
 
         date_string = game.headers.get(RequiredPgnHeaders.DATE.value)
-        date = self.pgn_date_string_to_date(date_string)
+        date = PgnParser.pgn_date_string_to_date(date_string)
 
         game_model.event = game.headers.get(RequiredPgnHeaders.EVENT.value)
         game_model.site = game.headers.get(RequiredPgnHeaders.SITE.value)
@@ -37,24 +37,6 @@ class GameFormView(FormView):
 
         return HttpResponseRedirect(reverse('game', kwargs={'pk': game_model.pk}))
 
-    def pgn_date_string_to_date(self, date_string):
-        # TODO Maybe move this somewhere else
-        date_split = date_string.split('.')
-        year = None
-        month = 1
-        day = 1
-        if '?' not in date_split[0]:
-            year = int(date_split[0])
-        if '?' not in date_split[1]:
-            month = int(date_split[1])
-        if '?' not in date_split[2]:
-            day = int(date_split[2])
-        if year is None:
-            date = None
-        else:
-            date = datetime.date(year, month, day)
-        return date
-
 
 class GameListView(ListView):
     model = Game
@@ -65,3 +47,10 @@ class GameListView(ListView):
 class GameDetailView(DetailView):
     model = Game
     template_name = "game_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(GameDetailView, self).get_context_data(**kwargs)
+        chess_game = ChessGame(PgnParser.parse(context['game'].pgn))
+        context['chess_board_svg'] = chess_game.get_svg_of_last_position()
+        context['turn_color'] = COLOR_NAMES[chess_game.get_last_turn_color()]
+        return context
