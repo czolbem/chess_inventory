@@ -6,16 +6,22 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Date</th>
                 <th scope="col">Description</th>
-                <th scope="col">PGN</th>
+                <th scope="col">Black</th>
+                <th scope="col">White</th>
+                <th scope="col">Result</th>
             </tr>
             </thead>
             <tbody>
             {% for game in game_list %}
                 <tr class="clickable" onclick="window.location='{% url 'game' game.pk %}';">
                     <th scope="row">{{ game.id }}</th>
+                    <td>{{ game.date|date:"d.m.Y" }}</td>
                     <td>{{ game.description }}</td>
-                    <td>{{ game.pgn|truncatechars:100 }}</td>
+                    <td>{{ game.black }}</td>
+                    <td>{{ game.white }}</td>
+                    <td>{{ game.result }}</td>
                 </tr>
             {% endfor %}
             </tbody>

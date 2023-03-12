@@ -23,21 +23,7 @@ class GameFormView(FormView):
         game = PgnParser.parse(game_model.pgn)
 
         date_string = game.headers.get(RequiredPgnHeaders.DATE.value)
-        date_split = date_string.split('.')
-        year = None
-        month = 1
-        day = 1
-        if '?' not in date_split[0]:
-            year = int(date_split[0])
-        if '?' not in date_split[1]:
-            month = int(date_split[1])
-        if '?' not in date_split[2]:
-            day = int(date_split[2])
-
-        if year is None:
-            date = None
-        else:
-            date = datetime.date(year, month, day)
+        date = self.pgn_date_string_to_date(date_string)
 
         game_model.event = game.headers.get(RequiredPgnHeaders.EVENT.value)
         game_model.site = game.headers.get(RequiredPgnHeaders.SITE.value)
@@ -51,10 +37,29 @@ class GameFormView(FormView):
 
         return HttpResponseRedirect(reverse('game', kwargs={'pk': game_model.pk}))
 
+    def pgn_date_string_to_date(self, date_string):
+        # TODO Maybe move this somewhere else
+        date_split = date_string.split('.')
+        year = None
+        month = 1
+        day = 1
+        if '?' not in date_split[0]:
+            year = int(date_split[0])
+        if '?' not in date_split[1]:
+            month = int(date_split[1])
+        if '?' not in date_split[2]:
+            day = int(date_split[2])
+        if year is None:
+            date = None
+        else:
+            date = datetime.date(year, month, day)
+        return date
+
 
 class GameListView(ListView):
     model = Game
     template_name = "game_list.html"
+    ordering = ['-date']
 
 
 class GameDetailView(DetailView):

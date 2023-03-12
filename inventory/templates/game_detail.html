@@ -1,10 +1,78 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="container-fluid">
-        <h1 class="mt-4">Game from DATE</h1>
-        <p>{{ game.description }}</p>
+        <h1 class="mt-4">
+            Game
+            {% if game.date %}
+                from {{ game.date|date:"d.m.Y" }}
+            {% endif %}</h1>
+        <div class="container-fluid">{{ game.description }}</div>
 
-        <h2>PGN</h2>
+        <h2 class="mt-2">Details</h2>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-2">
+                    Event
+                </div>
+                <div class="col">
+                    {{ game.event }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    Site
+                </div>
+                <div class="col">
+                    {{ game.site }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    Date
+                </div>
+                <div class="col">
+                    {% if game.date %}
+                        {{ game.date|date:"d.m.Y" }}
+                    {% else %}
+                        Date unknown
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    Round
+                </div>
+                <div class="col">
+                    {{ game.round }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    White
+                </div>
+                <div class="col">
+                    {{ game.white }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    Black
+                </div>
+                <div class="col">
+                    {{ game.black }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    Result
+                </div>
+                <div class="col">
+                    {{ game.result }}
+                </div>
+            </div>
+        </div>
+        <h2 class="mt-2">PGN</h2>
         <div class="bg-light">
             <pre>{{ game.pgn }}</pre>
         </div>
