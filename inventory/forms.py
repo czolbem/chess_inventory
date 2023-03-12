@@ -8,7 +8,7 @@ from inventory.models import Game
 class GameForm(ModelForm):
     class Meta:
         model = Game
-        fields = '__all__'
+        fields = ['description', 'pgn']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

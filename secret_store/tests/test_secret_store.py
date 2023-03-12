@@ -20,7 +20,7 @@ class SecretStoreTest(TestCase):
     def test_secret_store_sets_environment_variable_name(self):
         secret_store = SecretStore(DJANGO_SECRET_KEY_TEST)
 
-        self.assertEqual(DJANGO_SECRET_KEY_TEST, secret_store.environment_variable_name)
+        self.assertEqual(secret_store.environment_variable_name, DJANGO_SECRET_KEY_TEST)
 
     def test_secret_store_returns_django_secret_key(self):
         secret_store = SecretStore(DJANGO_SECRET_KEY_TEST)
@@ -29,7 +29,7 @@ class SecretStoreTest(TestCase):
 
         django_secret_key = secret_store.get_django_secret_key()
 
-        self.assertEqual(django_secret_key_expected, django_secret_key)
+        self.assertEqual(django_secret_key, django_secret_key_expected)
 
     def test_secret_store_throws_exception_when_environment_variable_not_set(self):
         secret_store = SecretStore(DJANGO_SECRET_KEY_TEST)

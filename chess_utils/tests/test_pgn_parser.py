@@ -63,10 +63,30 @@ class MyTestCase(TestCase):
         with self.assertRaises(InvalidPgnException):
             PgnParser.parse(invalid_pgn_string)
 
-    def test_pgn_parser_infers_missing_result_header_from_moves(self):
-        with open('resources/pgn_missing_result.pgn') as pgn:
-            pgn_string = pgn.read()
+    def test_pgn_parser_rejects_invalid_pgn_missing_result(self):
+        with open('resources/invalid_pgn_missing_result.pgn') as invalid_pgn:
+            invalid_pgn_string = invalid_pgn.read()
 
-        game = PgnParser.parse(pgn_string)
+        with self.assertRaises(InvalidPgnException):
+            PgnParser.parse(invalid_pgn_string)
 
-        self.assertEqual('1/2-1/2', game.headers.get('Result'))
+    def test_pgn_parser_rejects_invalid_pgn_non_numeric_date(self):
+        with open('resources/invalid_pgn_non_numeric_date.pgn') as invalid_pgn:
+            invalid_pgn_string = invalid_pgn.read()
+
+        with self.assertRaises(InvalidPgnException):
+            PgnParser.parse(invalid_pgn_string)
+
+    def test_pgn_parser_rejects_invalid_pgn_bad_format_date(self):
+        with open('resources/invalid_pgn_bad_format_date.pgn') as invalid_pgn:
+            invalid_pgn_string = invalid_pgn.read()
+
+        with self.assertRaises(InvalidPgnException):
+            PgnParser.parse(invalid_pgn_string)
+
+    def test_pgn_parser_rejects_invalid_pgn_bad_date(self):
+        with open('resources/invalid_pgn_bad_date.pgn') as invalid_pgn:
+            invalid_pgn_string = invalid_pgn.read()
+
+        with self.assertRaises(InvalidPgnException):
+            PgnParser.parse(invalid_pgn_string)
