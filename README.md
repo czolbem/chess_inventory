@@ -22,7 +22,6 @@
 
 
 
-<!-- PROJECT LOGO -->
 <h3 align="center">Chess Inventory</h3>
 
 <div>
@@ -45,6 +44,7 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#testing">Testing</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
@@ -101,6 +101,26 @@ The following commands are based on Windows cmd.exe.
    ```cmd
    python manage.py migrate
    ```
+### Testing
+
+To run the tests via Django:
+   ```cmd
+   python manage.py test
+   ```
+To generate a code coverage report:
+1. Run the tests with coverage
+   ```cmd
+   coverage run --source='.' manage.py test
+   ```
+2. Generate the report
+   ```cmd
+   coverage report -m
+   ```
+   or for a html report
+   ```cmd
+   coverage html
+   ```
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
