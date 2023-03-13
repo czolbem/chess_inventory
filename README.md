@@ -156,6 +156,8 @@ You can then find your games in the game list and can navigate to single games t
 - [ ] Game walk-through
 - [ ] Integrating chess engine and allowing game analysis
 - [ ] Creating statistics from the games like most popular openings
+- [ ] Bulk import of games
+- [ ] Integrating popular online chess platforms (e.g., for loading games)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
