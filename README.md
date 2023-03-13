@@ -58,7 +58,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Chess Inventory was created to help keep track of all your chess games from various sources like popular online chess platforms Lichess or Chess.com or traditional Over The Board games. This allows for analysis of games in one convinient place and the creation of statistics across all sources.   
+Chess Inventory was created to help keep track of all your chess games from various sources like popular online chess platforms Lichess or Chess.com or traditional Over The Board games. This allows for analysis of games in one convenient place and the creation of statistics across all sources.   
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
