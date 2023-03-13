@@ -76,7 +76,7 @@
                     ECO
                 </div>
                 <div class="col">
-                    {{ game.eco }}
+                    {{ game.eco|default_if_none:"-" }}
                 </div>
             </div>
             <div class="row">
@@ -84,7 +84,7 @@
                     Opening
                 </div>
                 <div class="col">
-                    {{ game.opening }}
+                    {{ game.opening|default_if_none:"-" }}
                 </div>
             </div>
             <div class="row">
@@ -92,7 +92,7 @@
                     Variation
                 </div>
                 <div class="col">
-                    {{ game.variation }}
+                    {{ game.variation|default_if_none:"-" }}
                 </div>
             </div>
             <div class="row">
@@ -100,7 +100,7 @@
                     ECO Transposition
                 </div>
                 <div class="col">
-                    {{ game.ecot }}
+                    {{ game.ecot|default_if_none:"-" }}
                 </div>
             </div>
             <div class="row">
@@ -108,7 +108,7 @@
                     Opening Transposition
                 </div>
                 <div class="col">
-                    {{ game.openingt }}
+                    {{ game.openingt|default_if_none:"-" }}
                 </div>
             </div>
             <div class="row">
@@ -116,7 +116,7 @@
                     Variation Transposition
                 </div>
                 <div class="col">
-                    {{ game.variationt }}
+                    {{ game.variationt|default_if_none:"-" }}
                 </div>
             </div>
         </div>
