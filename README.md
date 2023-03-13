@@ -98,9 +98,6 @@ The following commands are based on Windows cmd.exe.
    pip install -r requirements.txt
    ```
 5. Save your Django Secret Key (https://docs.djangoproject.com/en/4.1/ref/settings/#std-setting-SECRET_KEY) to an environment variable with the name `DJANGO_SECRET_KEY`
-   ```cmd
-   set DJANGO_SECRET_KEY=<your_secret_key>
-   ```
 6. Apply the migrations to the database
    ```cmd
    python manage.py migrate
