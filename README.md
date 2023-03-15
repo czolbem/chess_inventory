@@ -150,6 +150,7 @@ You can then find your games in the game list and can navigate to single games t
 <!-- ROADMAP -->
 ## Roadmap
 
+- [ ] Adding React (TypeScript) as frontend
 - [ ] Game walk-through
 - [ ] Integrating a chess engine and allowing game analysis
 - [ ] Creating statistics from the games (e.g., most popular openings)
