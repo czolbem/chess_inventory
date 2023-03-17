@@ -1,5 +1,5 @@
 import logging
-from typing import Any
+from typing import Any, Dict
 
 import chess.pgn
 import chess.svg
@@ -56,7 +56,7 @@ class ChessGame:
                 if gply >= maxply:
                     break
 
-        opening_information = {
+        opening_information: dict[OpeningPgnHeaders, str | None] = {
             OpeningPgnHeaders.ECO: first_eco,
             OpeningPgnHeaders.OPENING: first_opening,
             OpeningPgnHeaders.VARIATION: first_variation,

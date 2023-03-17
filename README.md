@@ -70,7 +70,8 @@ To use Chess Inventory, make sure to sort out the prerequisites and follow the i
 
 ### Prerequisites
 
-This project depends on Python 3.11.2. Installation instructions can be found here: https://www.python.org
+* Python 3.11.2: Installation instructions can be found here: https://www.python.org
+* Node.js 18.15.0: Installation instructions can be found here: https://nodejs.org/en
 
 
 The project should be OS independent but has only been tested on Windows 10.
@@ -102,6 +103,8 @@ The following commands are based on Windows cmd.exe.
    ```cmd
    python manage.py migrate
    ```
+#### TODO add section about node for the react/nextjs app
+
 ### Testing
 
 To run the tests via Django:
