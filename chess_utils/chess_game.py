@@ -1,3 +1,4 @@
+import logging
 from typing import Any
 
 import chess.pgn
@@ -23,6 +24,7 @@ class ChessGame:
     def calculate_opening_information(self) -> dict[OpeningPgnHeaders, Any | None]:
         # This is based on code from https://github.com/fsmosca/pgnhelper
         # Maybe cache this somehow?
+        logging.debug('Calculating opening information')
         eco_db = self.__create_eco_db()
         ply = 4
         maxply = 24
@@ -67,6 +69,7 @@ class ChessGame:
 
     @staticmethod
     def __create_eco_db() -> dict[str, dict[str, str | None]]:
+        logging.debug('Creating opening database from scratch')
         eco_db = {}
         with open('resources/eco.pgn', 'r') as eco_pgn:
             while True:

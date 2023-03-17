@@ -1,6 +1,6 @@
 import datetime
 import io
-
+import logging
 import chess.pgn
 
 from chess_utils.enums import RequiredPgnHeaders
@@ -11,12 +11,12 @@ class PgnParser:
     @staticmethod
     def parse(pgn: str) -> chess.pgn.Game:
         if not PgnParser.is_pgn_valid(pgn):
-            raise InvalidPgnException()
+            raise InvalidPgnException('PGN is not valid')
         game = chess.pgn.read_game(io.StringIO(pgn))
         if not PgnParser.is_game_valid(game):
-            raise InvalidPgnException()
+            raise InvalidPgnException('PGN contains a game that is not valid')
         if not PgnParser.is_date_valid(game, RequiredPgnHeaders.DATE.value):
-            raise InvalidPgnException()
+            raise InvalidPgnException('PGN contains invalid date')
         return game
 
     @staticmethod
@@ -49,8 +49,9 @@ class PgnParser:
             return False
 
         for header in RequiredPgnHeaders:
-            # Explicitly allow round because Lichess omits it for some reason
+            # Explicitly allow missing round because Lichess omits it for some reason
             if header is not RequiredPgnHeaders.ROUND and header.value not in tag_names:
+                logging.debug(f'Required header {header.value} not found in PGN')
                 return False
 
         return True
@@ -58,7 +59,7 @@ class PgnParser:
     @staticmethod
     def is_date_valid(game: chess.pgn.Game, date_tag_name: str) -> bool:
         """
-        Checking a date for complicance with the insance pgn standard date format:
+        Checking a date for compliance with the insane pgn standard date format:
         '2023.03.12' where any unknown value can be replaced by question marks
         """
         try:
