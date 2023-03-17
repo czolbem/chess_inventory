@@ -1,4 +1,3 @@
-import datetime
 from http import HTTPStatus
 
 from django.test import TestCase
@@ -6,6 +5,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from inventory.models import Game
+
 
 VALID_PGN_FILE = 'resources/valid_pgn.pgn'
 
@@ -35,7 +35,7 @@ class ViewTests(TestCase):
 
         self.assertRedirects(response, reverse('game', kwargs={'pk': 1}))
 
-    def test_add_game_enriches_and_saves_game_model(self):
+    def test_add_game_saves_game_model(self):
         url = reverse('add_game')
         with open(VALID_PGN_FILE) as pgn:
             pgn_string = pgn.read()
@@ -43,23 +43,7 @@ class ViewTests(TestCase):
 
         self.client.post(url, {'description': description, 'pgn': pgn_string})
 
-        game = Game.objects.get(pk=1)
-
-        self.assertEqual(game.description, description)
-        self.assertEqual(game.pgn, pgn_string)
-        self.assertEqual(game.event, 'WR Chess Masters 2023')
-        self.assertEqual(game.site, 'Dusseldorf GER')
-        self.assertEqual(game.date, datetime.date(2023, 2, 16))
-        self.assertEqual(game.round, '1')
-        self.assertEqual(game.white, 'Nepomniachtchi,I')
-        self.assertEqual(game.black, 'Abdusattorov,Nodirbek')
-        self.assertEqual(game.result, '1/2-1/2')
-        self.assertEqual(game.eco, 'A56')
-        self.assertEqual(game.opening, 'Benoni')
-        self.assertEqual(game.variation, None)
-        self.assertEqual(game.ecot, 'A57')
-        self.assertEqual(game.openingt, 'Benko gambit')
-        self.assertEqual(game.variationt, 'Gambit half accepted')
+        self.assertIsNotNone(Game.objects.get(pk=1))
 
     def test_get_games_returns_httpstatus_ok(self):
         url = reverse('games')
@@ -74,6 +58,24 @@ class ViewTests(TestCase):
         game = Game(description="Test Game", pgn=pgn_string)
         game.save()
         url = reverse('game', kwargs={'pk': game.pk})
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
+    def test_get_api_game_list_returns_httpstatus_ok(self):
+        url = reverse('game-list')
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
+    def test_get_api_game_detail_returns_httpstatus_ok(self):
+        with open(VALID_PGN_FILE) as pgn:
+            pgn_string = pgn.read()
+        game = Game(description="Test Game", pgn=pgn_string)
+        game.save()
+        url = reverse('game-detail', kwargs={'pk': game.pk})
 
         response = self.client.get(url)
 

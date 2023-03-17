@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'inventory.apps.InventoryConfig',
     'crispy_forms',
     'crispy_bootstrap5',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
