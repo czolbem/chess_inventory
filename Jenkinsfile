@@ -6,10 +6,12 @@ pipeline {
             args                 '-v /tmp:/tmp'
         }
     }
+    environment {
+        DJANGO_SECRET_KEY = 'ThisIsMySecretKey'
+    }
     stages {
         stage('Build') {
             steps {
-                sh 'export DJANGO_SECRET_KEY=ThisIsMySecretKey'
                 sh 'pip config set global.cert /etc/ssl/certs/ca-certificates.crt'
                 sh 'pip install -r requirements.txt'
             }
