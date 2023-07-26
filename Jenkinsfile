@@ -9,6 +9,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                sh 'pip config set global.cert /etc/ssl/certs/ca-certificates.crt'
                 sh 'pip install -r requirements.txt'
             }
         }
