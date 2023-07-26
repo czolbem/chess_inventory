@@ -1,6 +1,8 @@
 pipeline {
-        agent {
-            docker { image 'python:3.11' }
+        dockerfile {
+            filename             'Dockerfile'
+            dir                  'docker'
+            args                 '-v /tmp:/tmp'
         }
         stages {
             stage('Build') {
