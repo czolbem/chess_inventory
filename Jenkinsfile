@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        jdk 'jdk11'
+    }
     environment {
         DJANGO_SECRET_KEY = 'ThisIsMySecretKey'
     }
