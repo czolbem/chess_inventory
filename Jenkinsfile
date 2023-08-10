@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage("build & SonarQube analysis") {
             environment {
-                SCANNER_HOME = tool 'Default';
+                SCANNER_HOME = tool 'SonarQube Scanner 5';
             }
             steps {
                 withSonarQubeEnv('SonarQube') {
