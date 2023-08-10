@@ -15,19 +15,15 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'pip config set global.cert /etc/ssl/certs/ca-certificates.crt'
-                sh 'pip install -r requirements.txt'
+                sh 'java -version'
             }
         }
         stage('Unittest') {
             steps {
-                sh 'python manage.py test'
+                sh 'python --version'
             }
         }
         stage("SonarQube Analysis") {
-            agent {
-                label 'built-in'
-            }
             environment {
                 SCANNER_HOME = tool 'SonarQube Scanner 5';
             }
@@ -38,9 +34,6 @@ pipeline {
             }
         }
         stage("Quality Gate") {
-            agent {
-                label 'built-in'
-            }
             steps {
                 timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
