@@ -1,11 +1,5 @@
 pipeline {
-    agent {
-        dockerfile {
-            filename             'Dockerfile'
-            dir                  'docker'
-            args                 '-v /tmp:/tmp'
-        }
-    }
+    agent any
     environment {
         DJANGO_SECRET_KEY = 'ThisIsMySecretKey'
     }
@@ -22,9 +16,6 @@ pipeline {
             }
         }
         stage("build & SonarQube analysis") {
-            agent {
-                label 'built-in'
-            }
             steps {
                 script {
                     def scannerHome = tool 'SonarQube Scanner 5.0.1.3006';
