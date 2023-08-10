@@ -1,11 +1,5 @@
 pipeline {
-    agent {
-        dockerfile {
-            filename             'Dockerfile'
-            dir                  'docker'
-            args                 '-v /tmp:/tmp'
-        }
-    }
+    agent any
     tools {
         jdk 'jdk17'
     }
