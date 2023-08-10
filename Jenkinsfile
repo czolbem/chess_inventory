@@ -1,5 +1,11 @@
 pipeline {
-    agent any
+    agent {
+        dockerfile {
+            filename             'Dockerfile'
+            dir                  'docker'
+            args                 '-v /tmp:/tmp'
+        }
+    }
     tools {
         jdk 'jdk17'
     }
@@ -7,23 +13,33 @@ pipeline {
         DJANGO_SECRET_KEY = 'ThisIsMySecretKey'
     }
     stages {
-        stage("build & SonarQube analysis") {
+        stage('Build') {
+            steps {
+                sh 'pip config set global.cert /etc/ssl/certs/ca-certificates.crt'
+                sh 'pip install -r requirements.txt'
+            }
+        }
+        stage('Unittest') {
+            steps {
+                sh 'python manage.py test'
+            }
+        }
+        stage("SonarQube Analysis") {
             environment {
                 SCANNER_HOME = tool 'SonarQube Scanner 5';
             }
             steps {
-                sh 'java -version'
                 withSonarQubeEnv('SonarQube') {
                     sh "${env.SCANNER_HOME}/bin/sonar-scanner"
                 }
             }
           }
-          stage("Quality Gate") {
+        stage("Quality Gate") {
             steps {
-              timeout(time: 1, unit: 'HOURS') {
+                timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
-              }
+                }
             }
-          }
+        }
     }
 }
