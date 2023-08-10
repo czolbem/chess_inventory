@@ -1,5 +1,3 @@
-def scannerHome = tool 'Default';
-
 pipeline {
     agent any
     environment {
@@ -7,9 +5,12 @@ pipeline {
     }
     stages {
         stage("build & SonarQube analysis") {
+            environment {
+                SCANNER_HOME = tool 'Default';
+            }
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh "${scannerHome}/bin/sonar-scanner"
+                    sh "${env.SCANNER_HOME}/bin/sonar-scanner"
                 }
             }
           }
