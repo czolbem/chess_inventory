@@ -22,7 +22,9 @@ pipeline {
             }
         }
         stage("build & SonarQube analysis") {
-            agent any
+            agent {
+                label 'built-in'
+            }
             steps {
                 script {
                     def scannerHome = tool 'SonarQube Scanner 5.0.1.3006';
