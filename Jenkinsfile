@@ -21,5 +21,18 @@ pipeline {
                 sh 'python manage.py test'
             }
         }
+        stage("build & SonarQube analysis") {
+            agent any
+            def scannerHome = tool 'SonarScanner 5.0';
+            withSonarQubeEnv('SonarQube')
+            sh "${scannerHome}/bin/sonar-scanner"
+          }
+          stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
     }
 }
