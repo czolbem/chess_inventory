@@ -23,9 +23,11 @@ pipeline {
         }
         stage("build & SonarQube analysis") {
             agent any
-            def scannerHome = tool 'SonarScanner 5.0';
-            withSonarQubeEnv('SonarQube')
-            sh "${scannerHome}/bin/sonar-scanner"
+            steps {
+                def scannerHome = tool 'SonarScanner 5.0';
+                withSonarQubeEnv('SonarQube')
+                sh "${scannerHome}/bin/sonar-scanner"
+            }
           }
           stage("Quality Gate") {
             steps {
