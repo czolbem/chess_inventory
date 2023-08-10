@@ -18,12 +18,13 @@ pipeline {
             stages {
                 stage('Build') {
                     steps {
-                        sh 'python --version'
+                        sh 'pip config set global.cert /etc/ssl/certs/ca-certificates.crt'
+                        sh 'pip install -r requirements.txt'
                     }
                 }
                 stage('Unittest') {
                     steps {
-                        sh 'python --version'
+                        sh 'python manage.py test'
                     }
                 }
             }
