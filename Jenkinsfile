@@ -25,6 +25,9 @@ pipeline {
             }
         }
         stage("SonarQube Analysis") {
+            agent {
+                label 'built-in'
+            }
             environment {
                 SCANNER_HOME = tool 'SonarQube Scanner 5';
             }
@@ -33,8 +36,11 @@ pipeline {
                     sh "${env.SCANNER_HOME}/bin/sonar-scanner"
                 }
             }
-          }
+        }
         stage("Quality Gate") {
+            agent {
+                label 'built-in'
+            }
             steps {
                 timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
