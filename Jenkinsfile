@@ -12,6 +12,7 @@ pipeline {
                 SCANNER_HOME = tool 'SonarQube Scanner 5';
             }
             steps {
+                sh 'java -version'
                 withSonarQubeEnv('SonarQube') {
                     sh "${env.SCANNER_HOME}/bin/sonar-scanner"
                 }
